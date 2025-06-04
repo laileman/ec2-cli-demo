@@ -1,7 +1,7 @@
 package main
 
 import (
-	"ec2-cli-demo/cmd"
+	"github.com/laileman/ec2-cli-demo/cmd"
 )
 
 func main() {
