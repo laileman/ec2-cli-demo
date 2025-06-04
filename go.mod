@@ -1,4 +1,4 @@
-module aws-proxy
+module ec2-cli-demo
 
 go 1.23.4
 

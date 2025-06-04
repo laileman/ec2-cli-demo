@@ -1,7 +1,7 @@
 package main
 
 import (
-	"aws-proxy/cmd"
+	"ec2-cli-demo/cmd"
 )
 
 func main() {
