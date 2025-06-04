@@ -24,24 +24,23 @@ func Ssh(file string, user string) {
 	//publicIPs := make([]string, 0)
 	// Iterate through the reservations and instances to extract details
 	//publicIPs[0] = *resp.Reservations[0].Instances[0].PrivateIpAddress
-	fmt.Println(*resp.Reservations[0].Instances[0].PrivateIpAddress)
-	//if resp.Reservations[0].Instances[0].PublicIpAddress == nil {
-	//	fmt.Println("No public IP address available for the instance.")
-	//	return
-	//}
+
+	if resp.Reservations[0].Instances[0].PublicIpAddress == nil {
+		fmt.Println("No public IP address available for the instance. skipping SSH config generation.")
+		return
+	}
 	//fmt.Println(*resp.Reservations[0].Instances[0].PublicIpAddress)
 
 	sshCfg := `
 Host aws-instance
   HostName %s
   User %s`
-	sshCfg = fmt.Sprintf(sshCfg, *resp.Reservations[0].Instances[0].PrivateIpAddress, user)
+	sshCfg = fmt.Sprintf(sshCfg, *resp.Reservations[0].Instances[0].PublicIpAddress, user)
 	pterm.Info.Println("ssh config generate ...")
-	filepath := "/Users/leman/.ssh/config.d/aws.yaml"
-	err = ioutil.WriteFile(filepath, []byte(sshCfg), 777)
+	err = ioutil.WriteFile(file, []byte(sshCfg), 777)
 	if err != nil {
 		pterm.Error.Println("Error writing SSH config file:", err)
 		return
 	}
-	pterm.Success.Println("SSH config file generated successfully. ", filepath)
+	pterm.Success.Println("SSH config file generated successfully. ", file)
 }
