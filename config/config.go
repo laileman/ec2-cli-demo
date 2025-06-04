@@ -16,9 +16,9 @@ type AWSConfig struct {
 }
 
 func NewConfig(config string) *Config {
-	viper.SetConfigName(config)
+	viper.SetConfigFile(config) // 设置配置文件路径
 	viper.SetConfigType("yaml")
-	viper.AddConfigPath(".")
+	//viper.AddConfigPath(".")
 
 	if err := viper.ReadInConfig(); err != nil {
 		log.Fatalf("Error reading config file: %v", err)
